@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Instrument+Sans:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg: #f6f1e8;
+    --panel: #fffaf2;
+    --ink: #202637;
+    --muted: #6d7483;
+    --line: #e5d9c7;
+    --accent: #1f7a72;
+    --accent-strong: #165e58;
+    --warm: #f28f6b;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+    width: 100%;
+  }
+
+  body {
+    margin: 0;
+    font-family: 'Instrument Sans', sans-serif;
+    background:
+      radial-gradient(circle at top left, rgba(31, 122, 114, 0.18), transparent 28%),
+      radial-gradient(circle at 85% 10%, rgba(242, 143, 107, 0.2), transparent 24%),
+      linear-gradient(180deg, #f7f1e6 0%, #f3ecdf 100%);
+    color: var(--ink);
+  }
+
+  button,
+  input,
+  textarea,
+  select {
+    font: inherit;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: 'Space Grotesk', sans-serif;
+  }
+}
+
+@layer utilities {
+  .auth-grid {
+    background-color: #f7f1e8;
+    background-image:
+      radial-gradient(circle at 25px 25px, rgba(31, 122, 114, 0.08) 2px, transparent 0),
+      radial-gradient(circle at 75px 75px, rgba(242, 143, 107, 0.12) 2px, transparent 0),
+      linear-gradient(135deg, rgba(255, 250, 242, 0.92), rgba(246, 241, 232, 1));
+    background-size: 100px 100px, 100px 100px, auto;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f0e6d7;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ccbda7;
+  border-radius: 999px;
+}
