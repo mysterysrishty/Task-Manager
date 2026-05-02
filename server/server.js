@@ -16,7 +16,7 @@ const app = express();
 // ── CORS ──────────────────────────────────────────────
 const allowedOrigins = [
   "http://localhost:3000",
-  "https://task-manager-4a8k.vercel.app",
+  "https://task-manager-rouge-mu.vercel.app",
   ...(process.env.FRONTEND_URL || "").split(",").map(u => u.trim()).filter(Boolean)
 ];
 
