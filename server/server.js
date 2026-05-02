@@ -13,34 +13,30 @@ dotenv.config();
 
 const app = express();
 
-const envFrontendUrls = (process.env.FRONTEND_URL || "")
-  .split(",")
-  .map((value) => value.trim())
-  .filter(Boolean);
-
-const allowedOrigins = ["http://localhost:3000", ...envFrontendUrls];
-
-const isAllowedOrigin = (origin) => {
-  if (!origin) return true;
-  return allowedOrigins.includes(origin);
-};
+// ── CORS ──────────────────────────────────────────────
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://task-manager-4a8k.vercel.app",
+  ...(process.env.FRONTEND_URL || "").split(",").map(u => u.trim()).filter(Boolean)
+];
 
 app.use(
   cors({
-    origin(origin, callback) {
-      if (isAllowedOrigin(origin)) {
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
-        return;
+      } else {
+        callback(new Error(`CORS not allowed: ${origin}`));
       }
-
-      callback(new Error(`CORS not allowed: ${origin}`));
     },
     credentials: true,
   })
 );
 
+// ── MIDDLEWARE ────────────────────────────────────────
 app.use(express.json({ limit: "5mb" }));
 
+// ── ROUTES ────────────────────────────────────────────
 app.get("/api", (req, res) => {
   res.json({
     message: "TaskFlow API",
@@ -61,14 +57,15 @@ app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/projects", projectRoutes);
 app.use("/api/tasks", taskRoutes);
 
+// ── ERROR HANDLER ─────────────────────────────────────
 app.use((error, req, res, next) => {
   if (error?.message?.startsWith("CORS not allowed")) {
     return res.status(403).json({ detail: error.message });
   }
-
   next(error);
 });
 
+// ── START SERVER ──────────────────────────────────────
 const PORT = process.env.PORT || 8001;
 
 const startServer = async () => {
